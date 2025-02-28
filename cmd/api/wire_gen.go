@@ -10,6 +10,8 @@ import (
 	"awesomeProject/config"
 	"awesomeProject/internal/command"
 	"awesomeProject/internal/command/handler"
+	"awesomeProject/internal/compo"
+	"awesomeProject/internal/middleware"
 	"awesomeProject/routes"
 	"go.uber.org/zap"
 	"gopkg.in/natefinch/lumberjack.v2"
@@ -19,7 +21,11 @@ import (
 
 // wireApp dependency inject
 func wireApp(configuration *config.Configuration, lumberjackLogger *lumberjack.Logger, zapLogger *zap.Logger) (*App, func(), error) {
-	engine := routes.CreateBaseRouter()
+	recovery := middleware.NewRecoveryM(lumberjackLogger)
+	cors := middleware.NewCorsM()
+	limiterManager := compo.NewLimiterManager()
+	limiter := middleware.NewLimiterM(limiterManager)
+	engine := routes.CreateBaseRouter(recovery, cors, limiter)
 	server := newHttpServer(configuration, engine)
 	app := newApp(configuration, zapLogger, server)
 	return app, func() {

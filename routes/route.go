@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"awesomeProject/internal/middleware"
 	"github.com/gin-gonic/gin"
 	"github.com/google/wire"
 	"net/http"
@@ -9,9 +10,19 @@ import (
 // ProviderSet is router providers.
 var ProviderSet = wire.NewSet(CreateBaseRouter)
 
-func CreateBaseRouter() *gin.Engine {
+func CreateBaseRouter(
+	recoveryMiddleware *middleware.Recovery,
+	corsMiddleware *middleware.Cors,
+	limiterMiddleware *middleware.Limiter,
+) *gin.Engine {
 
 	router := gin.New()
+	router.Use(
+		gin.Logger(),
+		recoveryMiddleware.Handler(),
+		corsMiddleware.Handler(),
+		limiterMiddleware.Handler(),
+	)
 	router.GET("/ping", func(c *gin.Context) { c.String(http.StatusOK, "pong") })
 
 	apiGroup := router.Group("/api")

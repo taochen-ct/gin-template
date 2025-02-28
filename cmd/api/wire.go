@@ -7,6 +7,8 @@ import (
 	"awesomeProject/config"
 	"awesomeProject/internal/command"
 	commandHandler "awesomeProject/internal/command/handler"
+	"awesomeProject/internal/compo"
+	"awesomeProject/internal/middleware"
 	"awesomeProject/routes"
 	"github.com/google/wire"
 	"go.uber.org/zap"
@@ -17,6 +19,8 @@ import (
 func wireApp(*config.Configuration, *lumberjack.Logger, *zap.Logger) (*App, func(), error) {
 	panic(
 		wire.Build(
+			compo.ProviderSet,
+			middleware.ProviderSet,
 			routes.ProviderSet,
 			newHttpServer,
 			newApp,
