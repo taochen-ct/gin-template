@@ -4,5 +4,5 @@ import (
 	"github.com/google/wire"
 )
 
-// ProviderSet is handler providers.
+// ProviderSet command handler providerSet
 var ProviderSet = wire.NewSet(NewExampleHandler)
