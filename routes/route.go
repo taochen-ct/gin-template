@@ -22,8 +22,14 @@ func CreateBaseRouter() *gin.Engine {
 }
 
 func RegisterApiRouter(router *gin.RouterGroup) (err error) {
-	if err = RegisterUserRoute(router); err != nil {
-		return err
+	routeFuncs := []func(*gin.RouterGroup) error{
+		RegisterTestRoute,
+	}
+
+	for _, register := range routeFuncs {
+		if err = register(router); err != nil {
+			return err
+		}
 	}
 	return nil
 }

@@ -5,8 +5,8 @@ import (
 	"net/http"
 )
 
-func RegisterUserRoute(router *gin.RouterGroup) error {
-	router.GET("/user", func(c *gin.Context) {
+func RegisterTestRoute(router *gin.RouterGroup) error {
+	router.GET("/test", func(c *gin.Context) {
 		res := make(map[string]string)
 		res["message"] = "Hello World!"
 		c.JSON(http.StatusOK, res)
