@@ -23,15 +23,17 @@ go mod tidy
 ```
 .
 ├── cmd                 # CLI 命令管理
-│   ├── api             # API 相关命令
-│   ├── main.go         # 入口文件
-│   ├── wire.go         # Wire 依赖注入
-├── config              # 配置文件目录
+│   ├── api
+│       ├── app.go      # API 相关命令
+│       ├── main.go     # 入口文件
+│       ├── wire.go     # Wire 依赖注入
+├── config              # 配置声明
 ├── internal            # 内部业务逻辑
-├── pkg                # 通用组件
-├── logs                # 日志存储目录
+├── pkg                 # 通用组件
+├── routes              # 注册路由
+├── storage             # 存储目录
 ├── go.mod              # Go 依赖管理
-├── main.go             # 入口文件
+├── conf                # yaml配置文件
 ```
 
 ## 启动项目
@@ -51,10 +53,10 @@ go run ./cmd/api
 
 ```sh
 # 查看所有可用命令
-./app --help
+./main --help
 
 # 运行指定命令
-./app example
+./main example
 ```
 
 ## 配置日志
