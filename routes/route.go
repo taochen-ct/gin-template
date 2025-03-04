@@ -16,16 +16,21 @@ func CreateBaseRouter(
 	limiterMiddleware *middleware.Limiter,
 ) *gin.Engine {
 
+	// create new gin engine
 	router := gin.New()
+	// add middleware
 	router.Use(
-		gin.Logger(),
-		recoveryMiddleware.Handler(),
-		corsMiddleware.Handler(),
-		limiterMiddleware.Handler(),
+		gin.Logger(),                 // default logger
+		recoveryMiddleware.Handler(), // logger
+		corsMiddleware.Handler(),     // cors
+		limiterMiddleware.Handler(),  // request rate limiter
 	)
+	// test service health
 	router.GET("/ping", func(c *gin.Context) { c.String(http.StatusOK, "pong") })
 
+	// create api group
 	apiGroup := router.Group("/api")
+	// register customer api
 	if err := RegisterApiRouter(apiGroup); err != nil {
 		panic(err)
 	}
@@ -34,6 +39,7 @@ func CreateBaseRouter(
 
 func RegisterApiRouter(router *gin.RouterGroup) (err error) {
 	routeFuncs := []func(*gin.RouterGroup) error{
+		// add register func here
 		RegisterTestRoute,
 	}
 

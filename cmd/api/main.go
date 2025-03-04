@@ -6,6 +6,7 @@ import (
 	"awesomeProject/pkg/path"
 	"context"
 	"fmt"
+	"github.com/duke-git/lancet/v2/fileutil"
 	"github.com/fsnotify/fsnotify"
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
@@ -129,9 +130,8 @@ func initLogger() {
 	if !filepath.IsAbs(logFileDir) {
 		logFileDir = filepath.Join(rootPath, logFileDir)
 	}
-
-	if ok, _ := path.Exists(logFileDir); !ok {
-		_ = os.Mkdir(conf.Log.RootDir, os.ModePerm)
+	if !fileutil.IsExist(logFileDir) {
+		_ = fileutil.CreateDir(logFileDir)
 	}
 
 	switch conf.Log.Level {

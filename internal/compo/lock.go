@@ -2,13 +2,15 @@ package compo
 
 import (
 	"context"
+	"github.com/duke-git/lancet/v2/convertor"
 	"github.com/go-redis/redis/v8"
-	"go-service/utils/str"
+	"github.com/sony/sonyflake"
 	"time"
 )
 
 type LockBuilder struct {
 	rdb *redis.Client
+	sf  *sonyflake.Sonyflake
 }
 
 // NewLockBuilder .
@@ -17,10 +19,11 @@ func NewLockBuilder(rdb *redis.Client) *LockBuilder {
 }
 
 func (lb *LockBuilder) NewLock(ctx context.Context, name string, seconds int64) LockInterface {
+	randId, _ := lb.sf.NextID()
 	return &redisLock{
 		ctx,
 		name,
-		str.RandString(16),
+		convertor.ToString(randId),
 		seconds,
 		lb.rdb,
 	}
