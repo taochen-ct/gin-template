@@ -22,7 +22,7 @@ func (m *Recovery) Handler() gin.HandlerFunc {
 		m.loggerWriter,
 		func(c *gin.Context, err interface{}) {
 			c.JSON(http.StatusInternalServerError, response.Response{
-				ErrorCode: 50000,
+				ErrorCode: response.ServerError,
 				Data:      nil,
 				Message:   "Internal Server Error",
 			})

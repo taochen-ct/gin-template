@@ -35,7 +35,7 @@ func (m *Limiter) Handler(key ...string) gin.HandlerFunc {
 
 		if !l.L.Allow() {
 			ctx.JSON(http.StatusTooManyRequests, response.Response{
-				ErrorCode: 42900,
+				ErrorCode: response.TooManyRequests,
 				Data:      nil,
 				Message:   "Too many requests",
 			})
