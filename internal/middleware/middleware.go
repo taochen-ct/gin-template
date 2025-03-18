@@ -3,7 +3,7 @@ package middleware
 import "github.com/google/wire"
 
 var ProviderSet = wire.NewSet(
-	NewRecoveryM,
-	NewCorsM,
-	NewLimiterM,
+	NewRecoveryMiddleware,
+	NewCorsMiddleware,
+	NewLimiterMiddleware,
 )

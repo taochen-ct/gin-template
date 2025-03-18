@@ -8,7 +8,7 @@ import (
 type Cors struct {
 }
 
-func NewCorsM() *Cors {
+func NewCorsMiddleware() *Cors {
 	return &Cors{}
 }
 

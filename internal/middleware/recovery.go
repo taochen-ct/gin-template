@@ -11,7 +11,7 @@ type Recovery struct {
 	loggerWriter *lumberjack.Logger
 }
 
-func NewRecoveryM(loggerWriter *lumberjack.Logger) *Recovery {
+func NewRecoveryMiddleware(loggerWriter *lumberjack.Logger) *Recovery {
 	return &Recovery{
 		loggerWriter: loggerWriter,
 	}

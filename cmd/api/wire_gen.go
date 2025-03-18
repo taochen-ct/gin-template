@@ -21,10 +21,10 @@ import (
 
 // wireApp dependency inject
 func wireApp(configuration *config.Configuration, lumberjackLogger *lumberjack.Logger, zapLogger *zap.Logger) (*App, func(), error) {
-	recovery := middleware.NewRecoveryM(lumberjackLogger)
-	cors := middleware.NewCorsM()
+	recovery := middleware.NewRecoveryMiddleware(lumberjackLogger)
+	cors := middleware.NewCorsMiddleware()
 	limiterManager := compo.NewLimiterManager()
-	limiter := middleware.NewLimiterM(limiterManager)
+	limiter := middleware.NewLimiterMiddleware(limiterManager)
 	engine := routes.CreateBaseRouter(recovery, cors, limiter)
 	server := newHttpServer(configuration, engine)
 	app := newApp(configuration, zapLogger, server)

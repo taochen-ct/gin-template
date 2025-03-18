@@ -9,4 +9,7 @@ var ProviderSet = wire.NewSet(
 	NewLockBuilder,
 	NewLimiterManager,
 	NewSonyFlake,
+	NewData,
+	NewDB,
+	NewRedis,
 )

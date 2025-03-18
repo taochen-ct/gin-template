@@ -13,7 +13,7 @@ type Limiter struct {
 	lm *compo.LimiterManager
 }
 
-func NewLimiterM(lm *compo.LimiterManager) *Limiter {
+func NewLimiterMiddleware(lm *compo.LimiterManager) *Limiter {
 	return &Limiter{
 		lm: lm,
 	}
