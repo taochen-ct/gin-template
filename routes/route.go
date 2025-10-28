@@ -2,6 +2,7 @@ package routes
 
 import (
 	"awesomeProject/internal/middleware"
+	"github.com/gin-contrib/static"
 	"github.com/gin-gonic/gin"
 	"github.com/google/wire"
 	"net/http"
@@ -25,11 +26,18 @@ func CreateBaseRouter(
 		corsMiddleware.Handler(),     // cors
 		limiterMiddleware.Handler(),  // request rate limiter
 	)
+	// website server
+	router.Use(static.Serve("/", static.LocalFile("web", true)))
+	router.NoRoute(func(c *gin.Context) {
+		c.File("web/index.html")
+	})
+
 	// test service health
 	router.GET("/ping", func(c *gin.Context) { c.String(http.StatusOK, "pong") })
 
 	// create api group
-	apiGroup := router.Group("/api")
+	apiPrefix := "/api/v1"
+	apiGroup := router.Group(apiPrefix)
 	// register customer api
 	if err := RegisterApiRouter(apiGroup); err != nil {
 		panic(err)
